@@ -69,7 +69,7 @@ function App() {
                   })}
             </select><br />
             <br/>
-            Quantity: <input type='number' ref={quantityRef} placeholder='Enter Quantity...' /><br /><br/>
+            Quantity: <input type='number' ref={quantityRef} placeholder='Enter Quantity...' defaultValue={1} /><br /><br/>
             <Typography>Price Per Unit: {price} $</Typography>
             <Box display="flex" justifyContent="center" mt={4}>
                   <Button variant="contained" color="primary" type='submit'>Add</Button>

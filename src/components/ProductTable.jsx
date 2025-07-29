@@ -1,5 +1,5 @@
 import DeleteIcon from '@mui/icons-material/Delete'
-import { Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from "@mui/material"
 import { useRef } from "react"
 
 const ProductTable =({products, onSearch, onSortAsc, onSortDesc, onDelete}) => {
@@ -9,6 +9,11 @@ const ProductTable =({products, onSearch, onSortAsc, onSortDesc, onDelete}) => {
         onSearch(keyword) 
 
     }
+
+    const totalPrice = products.reduce((acc,item) => {
+        const itemTotal = item.price * item.quantity
+        return acc+ (isNaN(itemTotal) ? 0 : itemTotal)
+    },0);
 
     return(
         <Container>
@@ -41,6 +46,14 @@ const ProductTable =({products, onSearch, onSortAsc, onSortDesc, onDelete}) => {
                         </TableRow>
                     ))}
                 </TableBody>
+                <TableFooter>
+                    <TableRow>
+                        <TableCell colSpan={3}/>
+                        <TableCell align='right'><strong>Total Price : </strong> </TableCell>
+                        <TableCell align='center'><strong>{totalPrice}</strong></TableCell>
+                        <TableCell/>
+                    </TableRow>
+                </TableFooter>
             </Table>
         </TableContainer>
         </Container>
