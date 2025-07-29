@@ -19,9 +19,8 @@ const ProductTable =({products, onSearch, onSortAsc, onSortDesc, onDelete}) => {
         <Container>
             <input type="text" placeholder="Search..." ref={sRef} />{' '} 
                 <Button  size="small" sx={{ padding: "4px 10px", fontSize: "12px" }} color="white" onClick={handleSearch}>Search</Button>
-                Sort :
-                <Button  size="small" sx={{ padding: "4px 10px", fontSize: "12px" }} color="white" onClick={onSortAsc}>↑</Button>
-                <Button  size="small" sx={{ padding: "4px 10px", fontSize: "12px" }} color="white" onClick={onSortDesc}>↓</Button>
+                <Button  size="small" sx={{ padding: "4px 10px", fontSize: "12px" }} color="white" onClick={onSortAsc}> Sort ↑</Button>
+                <Button  size="small" sx={{ padding: "4px 10px", fontSize: "12px" }} color="white" onClick={onSortDesc}> Sort ↓</Button>
             <TableContainer component={Paper}>
             <Table>
                 <TableHead>

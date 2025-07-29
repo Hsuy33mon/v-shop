@@ -14,22 +14,34 @@ function App() {
     return saved ? JSON.parse(saved) : []
   })
   const [filteredSelectedItems, setFilteredSelectedItems] = useState([]) 
-  const [searchedKeyword,setSearchedKeyword] = useState("")
+  const [searchKeyword, setSearchKeyword] = useState("")
+
 
   const search = (keyword) => {
-    setSearchedKeyword(keyword.toLowerCase())
-      // setFilteredSelectedItems([ ...selectedItems.filter(item => item.name.toLowerCase().includes(keyword.toLowerCase())) , selectedItems]) 
-  } 
+  setSearchKeyword(keyword)
+  if (keyword.trim() === "") {
+    setFilteredSelectedItems(selectedItems)
+  } else {
+    const filtered = selectedItems.filter(item =>
+      item.name.toLowerCase().includes(keyword.toLowerCase())
+    )
+    setFilteredSelectedItems(filtered)
+  }
+  }
 
-  const filteredItems = selectedItems.filter(item => item.name.toLowerCase().includes(searchedKeyword))
+
   const sortAsc = () => {
-    const sorted = [...filteredSelectedItems].sort((a,b) => a.name.localeCompare(b.name))
+    const baseList = searchKeyword.trim() === "" ? [...selectedItems] : [...filteredSelectedItems]
+    const sorted = baseList.sort((a, b) => a.name.localeCompare(b.name))
     setFilteredSelectedItems(sorted)
   }
 
   const sortDesc = () => {
-    setFilteredSelectedItems([...filteredSelectedItems].sort((a,b) => b.name.localeCompare(a.name)))
+    const baseList = searchKeyword.trim() === "" ? [...selectedItems] : [...filteredSelectedItems]
+    const sorted = baseList.sort((a, b) => b.name.localeCompare(a.name))
+    setFilteredSelectedItems(sorted)
   }
+
 
   const deleteItemByIndex = (index) => { 
     selectedItems.splice(index, 1) 
@@ -38,6 +50,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("selectedItems", JSON.stringify(selectedItems))
+    setFilteredSelectedItems(selectedItems)
   }, [selectedItems])
 
   const onSubmit = (e) => {
@@ -49,6 +62,7 @@ function App() {
     }
     console.table(order)
     setSelectedItems([...selectedItems, order])
+    setFilteredSelectedItems([...selectedItems, order])
   }
   const updatePrice = (e) => {
     const productId = parseInt(e.target.value)
@@ -78,8 +92,8 @@ function App() {
         </form>
       </Box>
       <Box>
-        <ProductTable 
-          products={filteredItems}
+        <ProductTable
+          products={filteredSelectedItems}
           onSearch={search}
           onSortAsc={sortAsc}
           onSortDesc={sortDesc}
@@ -90,4 +104,4 @@ function App() {
   )
 }
 
-export default App 
+export default App
